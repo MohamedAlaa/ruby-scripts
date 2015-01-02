@@ -35,7 +35,7 @@ time = Benchmark.realtime do
   end
 
   # Return true if Image is square
-  def is_square(width, height)
+  def square?(width, height)
     if width == height
       return true
     end
@@ -44,7 +44,7 @@ time = Benchmark.realtime do
   end
 
   # Return true if image match minimum size requirement
-  def match_minimum_size(width, height, min)
+  def match_minimum_size?(width, height, min)
     if ( width && height ) < min
       return false
     end
@@ -53,9 +53,9 @@ time = Benchmark.realtime do
   end
 
   # Write JSON Results
-  def write_json(file, results)
+  def write_results(file, arr)
     File.open(file,'w') do |f|
-      f.write(JSON.pretty_generate(results))
+      f.write(JSON.pretty_generate(arr))
     end
   end
 
@@ -72,10 +72,10 @@ time = Benchmark.realtime do
     }
 
     ## Validate If Image is Square
-    obj['validation']['square_image'] = is_square(obj['size'][0], obj['size'][1])
-    obj['validation']['minmum_size_match'] = match_minimum_size(obj['size'][0], obj['size'][1], minimum_size)
+    obj['validation']['square_image'] = square?(obj['size'][0], obj['size'][1])
+    obj['validation']['minmum_size_match'] = match_minimum_size?(obj['size'][0], obj['size'][1], minimum_size)
 
-    if (obj['validation']['square_image'] == false) || (obj['validation']['minmum_size_match'] == false)
+    unless (obj['validation']['square_image'] && obj['validation']['minmum_size_match'])
       # Invalid Image
       invalid.push( obj )
       copy_to_folder( obj['image'], invalid_dir)
@@ -90,9 +90,9 @@ time = Benchmark.realtime do
   end
 
   # Print results in json files
-  write_json('results.json', images)
-  write_json('valid/valid.json', valid)
-  write_json('invalid/invalid.json', invalid)
+  write_results('results.json', images)
+  write_results('valid/valid.json', valid)
+  write_results('invalid/invalid.json', invalid)
 
 end
 
