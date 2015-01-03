@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
 # Image Processing
-gem "mini_magick"
+gem "fastimage"
