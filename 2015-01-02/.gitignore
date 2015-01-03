@@ -3,3 +3,4 @@ valid/*
 Gemfile.lock
 *.json
 */*.json
+.env
