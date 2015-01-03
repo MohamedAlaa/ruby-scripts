@@ -1,0 +1,5 @@
+invalid/*
+valid/*
+Gemfile.lock
+*.json
+*/*.json
